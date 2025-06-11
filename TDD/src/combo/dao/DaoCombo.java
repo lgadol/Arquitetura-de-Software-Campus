@@ -13,6 +13,7 @@ import java.sql.SQLException;
 /**
  *
  * @author dlnotari
+ * @author pedro gado
  */
 public class DaoCombo {
     // atributos
@@ -31,10 +32,12 @@ public class DaoCombo {
      * @throws ClassNotFoundException 
      */
     public ResultSet listaLivros() throws SQLException, E_BD, ClassNotFoundException {
+        if (this.getConexao() == null || this.getConexao().getBd() == null) {
+            throw new E_BD("Erro Crítico: A camada de acesso a dados (DAO) recebeu uma conexão não inicializada.");
+        }
+        
         // consultar o código
-        String sql = "select titulo from livros"
-                 //   + " limit 1200000"
-                ;
+        String sql = "select titulo from livros";
 
         // obtem objeto
         PreparedStatement ps = this.getConexao().getBd().getStatement(sql);
@@ -44,7 +47,7 @@ public class DaoCombo {
 
         // return
         return rs;
-    }     
+    }  
 
     /**
      * 
@@ -53,7 +56,13 @@ public class DaoCombo {
      * @throws E_BD
      * @throws ClassNotFoundException 
      */
+ // DaoCombo.java
+
     public ResultSet pesquisaDadosLivros() throws SQLException, E_BD, ClassNotFoundException {
+        if (this.getConexao() == null || this.getConexao().getBd() == null) {
+            throw new E_BD("Erro Crítico: A camada de acesso a dados (DAO) recebeu uma conexão não inicializada.");
+        }
+        
         // consultar o código
         String sql = "select l.titulo, a.nome, e.numero, e.ano"
                 + "   from livros l inner join livroAutor la on l.codigo = la.codigoLivro "
@@ -70,7 +79,7 @@ public class DaoCombo {
         
         // return
         return rs;
-    }  
+    }
     
     
     // getter

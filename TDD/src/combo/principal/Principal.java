@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package combo.principal;
 
 import combo.bo.BoConexao;
@@ -12,21 +8,22 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author dlnotari
+ * @author pedor gado
  */
 public class Principal {
     // atributos
     private GuiCombo gui;
-    private BoConexao conexao;
+    // private BoConexao conexao;
 
     // construtor
     public Principal() {
-        this.conexao = new BoConexao();
+       // this.conexao = new BoConexao();
     }
 
     /**
      * conectar
      */
-    private void conectar() {
+  /*  private void conectar() {
         try {
             // conectar
             this.getConexao().conectar();
@@ -38,12 +35,12 @@ public class Principal {
                     + ex.toString(),
                     "Manipular tabelas do banco de dados!", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    } */
 
     /**
      * desconectar do banco de dados
      */
-    private void desconectar() {
+   /* private void desconectar() {
         try {
             // desconectar
             this.getConexao().desconectar();
@@ -55,11 +52,11 @@ public class Principal {
                     + ex.toString(),
                     "Manipular tabelas do banco de dados!", JOptionPane.ERROR_MESSAGE);
         }
-    }
+    } */
 
-    public BoConexao getConexao() {
+   /* public BoConexao getConexao() {
         return conexao;
-    }
+    } */
 
     /**
      * *
@@ -67,16 +64,15 @@ public class Principal {
      */
     public void executar() {
         // conectar
-        this.conectar();
+        // this.conectar();
         
         // cria tela
-        this.gui = new GuiCombo(true, conexao);
+        this.gui = new GuiCombo(true);
         
         // mostra tela
         this.gui.setVisible(true);
         
-        // desconescta
-        this.desconectar();
+        // this.desconectar();
     }
 
     // main

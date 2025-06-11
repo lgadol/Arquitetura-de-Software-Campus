@@ -19,10 +19,10 @@ import javax.swing.JOptionPane;
 /**
  *
  * @author Daniel
+ * @author pedro gado
  */
 public class CoCombo {
     // atributos
-
     private BoCombo bo;
     private GuiCombo gui;
 
@@ -32,10 +32,6 @@ public class CoCombo {
         this.bo = new BoCombo(conexao);
     }
 
-    /**
-     * *
-     * carrega os livros no combobox
-     */
     public void carregarListaLivros() {
         try {
             // obter lista de livros
