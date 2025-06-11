@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package combo.gui;
 
 import combo.bd.DaoStringConexao;
@@ -26,8 +22,8 @@ public class GuiCombo extends javax.swing.JDialog {
     private javax.swing.JButton btnAnterior;
     private javax.swing.JButton btnProximo;
     private javax.swing.JLabel lblInfoPagina;
-    private javax.swing.JTable tabelaLivros; // Supondo que você tenha ou vá adicionar uma JTable
-    private javax.swing.JScrollPane scrollPaneTabela; // Para colocar a JTable
+    private javax.swing.JTable tabelaLivros;
+    private javax.swing.JScrollPane scrollPaneTabela;
     
  // NOVO CONSTRUTOR
     public GuiCombo(boolean modal) {
@@ -41,23 +37,21 @@ public class GuiCombo extends javax.swing.JDialog {
 
     @SuppressWarnings("unchecked")
     private void initComponents() {
-
-        // --- Componentes antigos que serão removidos ou substituídos ---
         // jComboBoxCliente = new javax.swing.JComboBox();
         // jLabel2 = new javax.swing.JLabel(); // Relacionado ao JComboBox
 
         // --- Componentes principais ---
         jLabelBancoDeDados = new javax.swing.JLabel();
         jComboBancoDeDados = new javax.swing.JComboBox<>();
-        jButtonInserirCliente = new javax.swing.JButton(); // Botão "Carregar"
+        jButtonInserirCliente = new javax.swing.JButton();
         jButtonFechar = new javax.swing.JButton();
-        jLabel5 = new javax.swing.JLabel(); // Título "Livros e seus dados"
+        jLabel5 = new javax.swing.JLabel();
 
         // --- Componentes da Tabela e Paginação ---
         tabelaLivros = new javax.swing.JTable();
         scrollPaneTabela = new javax.swing.JScrollPane(tabelaLivros);
-        btnAnterior = new javax.swing.JButton("<< Anterior");
-        btnProximo = new javax.swing.JButton("Próximo >>");
+        btnAnterior = new javax.swing.JButton("Anterior");
+        btnProximo = new javax.swing.JButton("Próximo");
         lblInfoPagina = new javax.swing.JLabel("Página - de -");
 
         // --- Configuração dos Componentes ---
@@ -68,10 +62,9 @@ public class GuiCombo extends javax.swing.JDialog {
         jLabelBancoDeDados.setText("Banco de Dados:");
         jComboBancoDeDados.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "PostgreSQL", "MySQL" }));
 
-        // O botão principal agora é "Carregar Dados"
+        // O botão principal agora é "Buscar Dados"
         jButtonInserirCliente.setFont(new java.awt.Font("Tahoma", 1, 14));
-        jButtonInserirCliente.setText("Carregar Dados");
-        // Removi o segundo botão "Carregar" (jButtonExcluirCliente) para evitar confusão
+        jButtonInserirCliente.setText("Buscar Dados");
 
         jLabel5.setFont(new java.awt.Font("Tahoma", 1, 18));
         jLabel5.setHorizontalAlignment(javax.swing.SwingConstants.CENTER);
@@ -81,12 +74,20 @@ public class GuiCombo extends javax.swing.JDialog {
 
         jButtonFechar.setFont(new java.awt.Font("Tahoma", 1, 14));
         jButtonFechar.setText("Fechar");
+        
+        try {
+            jButtonInserirCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa.png")));
+            btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anterior.png")));
+            btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proximo.png")));
+        } catch (Exception ex) {
+            System.err.println("Erro ao carregar os ícones: " + ex.getMessage());
+        }
 
         // --- Action Listeners ---
         // O botão de carregar agora chama o método para carregar a primeira página.
         // A lógica de conexão foi movida para o Controller.
         jButtonInserirCliente.addActionListener(evt -> {
-            // A lógica de conexão e criação do controller deve estar aqui.
+            // A lógica de conexão e criação do controller aqui.
             String bancoSelecionado = (String) jComboBancoDeDados.getSelectedItem();
             DaoStringConexao provedor;
             if ("MySQL".equals(bancoSelecionado)) {
@@ -169,7 +170,7 @@ public class GuiCombo extends javax.swing.JDialog {
         pack();
     }
     
-    /* DOIS MÉTODOS ANTIGOS QUE NÃO SERÃO MAIS UTILIZADOS
+    /* DOIS MÉTODOS ANTIGOS QUE NÃO SÃO MAIS UTILIZADOS
     private void jButtonInserirClienteActionPerformed(java.awt.event.ActionEvent evt) {                                                  
         String bancoSelecionado = (String) jComboBancoDeDados.getSelectedItem();
         DaoStringConexao provedor;
@@ -250,7 +251,7 @@ public class GuiCombo extends javax.swing.JDialog {
      * @param table A JTable a ser ajustada.
      */
     public void ajustarLarguraColunas(javax.swing.JTable table) {
-        // Desativa o redimensionamento automático para que possamos definir larguras customizadas
+        // Desativa o redimensionamento automático para definir larguras customizadas
         table.setAutoResizeMode(javax.swing.JTable.AUTO_RESIZE_OFF);
         
         for (int column = 0; column < table.getColumnCount(); column++) {

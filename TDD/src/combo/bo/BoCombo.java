@@ -6,8 +6,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 /**
- * Camada de Negócio (Business Object).
- * Repassa as solicitações do Controller para a camada DAO.
  * @author Daniel
  * @author pedro gado
  */
@@ -16,7 +14,7 @@ public class BoCombo {
     private final BoConexao conexao;
     private final DaoCombo dao;
 
-    // Construtor (continua o mesmo, está correto)
+    // Construtor
     public BoCombo(BoConexao conexao) {
         this.conexao = conexao;
         this.dao = new DaoCombo(conexao);
@@ -42,25 +40,9 @@ public class BoCombo {
         return this.getDao().pesquisaDadosLivrosPaginado(limit, offset);
     }
     
-    // --- MÉTODOS ANTIGOS (Não são mais usados pela nova lógica de paginação) ---
-    
-    /**
-     * MÉTODO ANTIGO: obtem lista de livros para o JComboBox.
-     * Não é mais necessário para a JTable paginada.
-     */
     public ResultSet listaLivros() throws SQLException, E_BD, ClassNotFoundException {
         return this.getDao().listaLivros();
     }
-    
-    /**
-     * MÉTODO ANTIGO: obtem lista completa de livros e seus dados.
-     * Foi substituído pela versão paginada.
-     */
-    /*public ResultSet pesquisaDadosLivros() throws SQLException, E_BD, ClassNotFoundException {
-        return this.getDao().pesquisaDadosLivros();
-    }*/
-    
-    // --- GETTERS (continuam os mesmos) ---
     
     public BoConexao getConexao() {
         return conexao;

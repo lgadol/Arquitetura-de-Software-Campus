@@ -1,7 +1,3 @@
-/*
- * To change this template, choose Tools | Templates
- * and open the template in the editor.
- */
 package combo.dao;
 
 import combo.bo.BoConexao;
@@ -64,21 +60,43 @@ public class DaoCombo {
             throw new E_BD("Erro Crítico: A camada de acesso a dados (DAO) recebeu uma conexão não inicializada.");
         }
 
-        // A sintaxe pode variar um pouco entre PostgreSQL e MySQL
-        // PostgreSQL e MySQL (versões mais novas) suportam LIMIT e OFFSET.
-        String sql = "select l.titulo, a.nome, e.numero, e.ano"
-                + "   from livros l inner join livroAutor la on l.codigo = la.codigoLivro "
-                + "   inner join autor a on a.codigo = la.codigoAutor"
-                + "   inner join edicao e on a.codigo = e.codigoLivro"
-                + "   order by l.titulo" // É importante ter um ORDER BY para resultados consistentes
-                + "   LIMIT ? OFFSET ?";
+        String sgbd = this.getConexao().getConexao().getVoConexao().getSgbd();
+        String sql;
+
+        if (sgbd.equalsIgnoreCase("PostgreSQL") || sgbd.equalsIgnoreCase("postgres")) {
+            // Para PostgreSQL
+            sql = "SELECT l.titulo, "
+                + "   string_agg(DISTINCT a.nome, ', ') as autores, "
+                + "   COUNT(e.numero) as n_edicoes, "
+                + "   MAX(e.ano) as ultimo_ano "
+                + "FROM livros l "
+                + "LEFT JOIN livroAutor la ON l.codigo = la.codigoLivro "
+                + "LEFT JOIN autor a ON a.codigo = la.codigoAutor "
+                + "LEFT JOIN edicao e ON l.codigo = e.codigoLivro "
+                + "GROUP BY l.codigo, l.titulo "
+                + "ORDER BY l.titulo "
+                + "LIMIT ? OFFSET ?";
+
+        } else {
+            // Para MySQL
+            sql = "SELECT l.titulo, "
+                + "   GROUP_CONCAT(DISTINCT a.nome SEPARATOR ', ') as autores, "
+                + "   COUNT(e.numero) as n_edicoes, "
+                + "   MAX(e.ano) as ultimo_ano "
+                + "FROM livros l "
+                + "LEFT JOIN livroAutor la ON l.codigo = la.codigoLivro "
+                + "LEFT JOIN autor a ON a.codigo = la.codigoAutor "
+                + "LEFT JOIN edicao e ON l.codigo = e.codigoLivro "
+                + "GROUP BY l.codigo, l.titulo "
+                + "ORDER BY l.titulo "
+                + "LIMIT ? OFFSET ?";
+        }
 
         PreparedStatement ps = this.getConexao().getBd().getStatement(sql);
-        ps.setInt(1, limit);   // Define o limite de registros
-        ps.setInt(2, offset);  // Define o ponto de partida
+        ps.setInt(1, limit);
+        ps.setInt(2, offset);
 
-        ResultSet rs = this.getConexao().getBd().consulta(ps);
-        return rs;
+        return this.getConexao().getBd().consulta(ps);
     }
     
     // Novo método para contar o total de registros
@@ -91,7 +109,6 @@ public class DaoCombo {
         }
         return 0;
     }
-    
     
     // getter
     public BoConexao getConexao() {

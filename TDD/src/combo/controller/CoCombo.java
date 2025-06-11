@@ -13,8 +13,6 @@ import javax.swing.table.DefaultTableModel;
 import javax.swing.table.TableModel;
 
 /**
- * Controller responsável por gerenciar a lógica da tela principal,
- * incluindo o controle da paginação de dados na JTable.
  * @author Daniel
  * @author pedro gado
  */
@@ -25,7 +23,7 @@ public class CoCombo {
     
     // --- ATRIBUTOS DE ESTADO DA PAGINAÇÃO ---
     private int paginaAtual = 1;
-    private final int TAMANHO_PAGINA = 10; // Exibe 10 registros por página
+    private final int TAMANHO_PAGINA = 20;
     private int totalDePaginas = 0;
 
     // --- CONSTRUTOR ---
