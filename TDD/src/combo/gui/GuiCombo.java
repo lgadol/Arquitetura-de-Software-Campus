@@ -74,11 +74,13 @@ public class GuiCombo extends javax.swing.JDialog {
 
         jButtonFechar.setFont(new java.awt.Font("Tahoma", 1, 14));
         jButtonFechar.setText("Fechar");
+        jButtonFechar.setBackground(new java.awt.Color(255, 150, 150));
         
         try {
             jButtonInserirCliente.setIcon(new javax.swing.ImageIcon(getClass().getResource("/lupa.png")));
             btnAnterior.setIcon(new javax.swing.ImageIcon(getClass().getResource("/anterior.png")));
             btnProximo.setIcon(new javax.swing.ImageIcon(getClass().getResource("/proximo.png")));
+            jButtonFechar.setIcon(new javax.swing.ImageIcon(getClass().getResource("/fechar.png")));
         } catch (Exception ex) {
             System.err.println("Erro ao carregar os ícones: " + ex.getMessage());
         }
@@ -127,7 +129,7 @@ public class GuiCombo extends javax.swing.JDialog {
             .addGroup(layout.createSequentialGroup()
                 .addGap(20, 20, 20)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
-                    .addComponent(scrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 760, Short.MAX_VALUE)
+                    .addComponent(scrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 1000, Short.MAX_VALUE)
                     .addComponent(jLabel5, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                     .addGroup(layout.createSequentialGroup()
                         .addComponent(jLabelBancoDeDados)
@@ -156,7 +158,7 @@ public class GuiCombo extends javax.swing.JDialog {
                 .addGap(18, 18, 18)
                 .addComponent(jLabel5)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                .addComponent(scrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 300, Short.MAX_VALUE)
+                .addComponent(scrollPaneTabela, javax.swing.GroupLayout.DEFAULT_SIZE, 345, Short.MAX_VALUE)
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(btnAnterior)
